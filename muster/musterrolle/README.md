@@ -3,12 +3,12 @@
 ### Beschreibung
 
 ### Funktioniert auf
-- [ ] Ubuntu (>=18.04)
+- [ ] Ubuntu (>=20.04)
 - [ ] Debian
 - [ ] ProxMox 6.1
 
 ### Variablen + Defaults
-see [defaults](./defaults/main.yml)
+
 
 
 ## Checkliste fuer Rolle
