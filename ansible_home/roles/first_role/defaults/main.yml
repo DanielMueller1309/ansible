@@ -1,0 +1,4 @@
+testvar: "wort_default_rolle"
+#ansible_user: "user"
+#ansible_become_pass: "hallowelt"
+ansible_ssh_common_args: "'-o StrictHostKeyChecking=no'"

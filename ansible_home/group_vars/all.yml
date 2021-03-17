@@ -1,0 +1,21 @@
+#testvar: "wort_groupvars_all"
+ansible_user: "user"
+ansible_become_pass: "{{ lookup('keepass', 'testserver', 'password') }}"
+
+#User für die ssh session
+#ansible_ssh_user: "user"
+#ansible_ssh_pass: "hallowelt"
+
+#Schaltet das checking aus und verbindet einfach auch wenn sich der key geändert hat
+ansible_ssh_common_args: "'-o StrictHostKeyChecking=no'"
+
+
+#KeePass password
+keepass_dbx: "./database_server.kdbx"
+keepass_psw: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          36393765363234326263343333393933613838306132623237343833396132646164643031373230
+          3637343461643361353736313164383538396539333531360a316466363039376130653763363661
+          31363937626437623562623231313264363935663862386664626130393865393332393939306366
+          3934613264323637300a373461333232326261623038653335326235383839323134386664383930
+          3139
