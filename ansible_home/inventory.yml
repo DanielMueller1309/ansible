@@ -1,0 +1,20 @@
+---
+  all:
+    children:
+      proxmox:
+        hosts:
+          192.168.178.10:
+      ubuntu:
+        hosts:
+          192.168.178.11:
+          192.168.178.12:
+      dhcp:
+        hosts:
+          192.168.178.11:
+      vpn:
+        hosts:
+          192.168.178.12:
+      testserver:
+        hosts:
+          tests1:
+            ansible_host: 192.168.178.54

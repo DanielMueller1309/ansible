@@ -1,0 +1,6 @@
+---
+  - hosts: testserver
+    roles:
+      - first_role
+    vars:
+      testvar: "wort_playbook_var"

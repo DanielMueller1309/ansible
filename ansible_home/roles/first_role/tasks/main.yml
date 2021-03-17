@@ -1,0 +1,7 @@
+---
+  - name: add line in file
+    become: true
+    ansible.builtin.lineinfile:
+      path: /tmp/testdatei
+      line: '{{ testvar }}'
+      create: yes
