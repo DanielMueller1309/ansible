@@ -1,0 +1,13 @@
+dependencies:
+  - role: geerlingguy.ansible_role_pip
+    pip_package: python3-pip
+    pip_install_packages:
+      - name: proxmoxer
+        state: present
+        executable: pip3
+      - name: requests
+        state: present
+        executable: pip3
+      - name: paramiko
+        state: present
+        executable: pip3
