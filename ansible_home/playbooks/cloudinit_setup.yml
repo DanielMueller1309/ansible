@@ -1,0 +1,4 @@
+---
+  - hosts: proxmox
+    roles:
+      -  cloud_init_setup
