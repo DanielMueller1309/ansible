@@ -1,4 +1,5 @@
 ---
   - hosts: proxmox
     roles:
-      -  cloud_init_setup
+      - ansible_cloud_init
+#      -  cloud_init_setup
