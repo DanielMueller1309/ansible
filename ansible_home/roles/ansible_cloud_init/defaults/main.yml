@@ -23,7 +23,7 @@ cloud_init_configuration:
      - name:             user
        lock_passwd:      true
        gecos:            Ubuntu
-       passwd: $6$WociuilSg$XL7hR6qo99a3rXgczmJXHaN7yWQBWM9dPaA6uMwZLUSbsMCJqEYZLR5JuirDROtFR6NlzeYoXUFZeS2nEXuWd0
+       passwd: $6$6uUb5oFk$le4pkOjNUWRGZ96G5ttdcx.1qAd.8CFeTXvqA5DGjrXxBpn5P1PozuiOUcO3OoF59486CL9LEgIrhOIjtxll9.
 
        groups:
          - adm

@@ -1,0 +1,25 @@
+---
+  - name: check if vm exists
+    shell: "qm list | grep 100"
+    register: check_result
+    ignore_errors: yes
+
+  #- name: create template
+  #   block:
+  #- name: download cloud image qcow2
+  #  get_url:
+  #    url: https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
+  #    dest: ~/
+
+  - name: create vm
+    command: "qm create 100 --agent 1 --cores 1 --kvm 1 --memory 2048 --net0 virtio,bridge=vmbr0 --name testvm-template --ostype l26 --scsihw virtio-scsi-pci --ipconfig0 ip=192.168.56.210/24 --cipassword hallowelt --ciuser user"
+  - name: import init disk
+    command: "qm importdisk 100 focal-server-cloudimg-amd64.img local-lvm"
+  - name: attache init disk
+    command: "qm set 100 --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-100-disk-0"
+  - name: add cloud-init CDROM drive
+    command: "qm set 100 --ide2 local-lvm:cloudinit"
+  - name: boot directly from cloud image
+    command:  "qm set 100 --boot c --bootdisk scsi0"
+  - name: start template
+    command: "qm start 100"
