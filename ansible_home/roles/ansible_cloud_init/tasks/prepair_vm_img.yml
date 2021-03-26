@@ -1,0 +1,76 @@
+---
+  # für test nicht immer neu runterladen
+  #- name: download cloud image qcow2
+  #  get_url:
+  #    url: https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
+  #    dest: ~/
+
+
+
+  - name: install needed packages
+     ansible.builtin.apt:
+       pkg:
+         - qemu-kvm
+         - qemu-utils
+         - genisoimage
+         - virtinst
+
+  - name: create dir
+    ansible.builtin.file:
+    path: /var/lib/libvirt/images/base
+    state: directory
+    mode: '0777
+    ansible.builtin.file:
+    path: /var/lib/libvirt/images/instance-1
+    state: directory
+    mode: '0777
+
+  - name: move downloaded file
+    ansible.builtin.copy:
+    src: ~/focal-server-cloudimg-amd64.img
+    dest:  /var/lib/libvirt/images/base/ubuntu-20.04.qcow2
+    owner: root
+    group: sudo
+    mode: '0777'
+
+  - name:
+    ansible.builtin.command:
+      cmd: "qemu-img create -f qcow2 -o backing_file=/var/lib/libvirt/images/base/ubuntu-20.04.qcow2 /var/lib/libvirt/images/instance-1/instance-1.qcow2"
+      creates: /var/lib/libvirt/images/instance-1/instance-1.qcow2
+  - name:
+    ansible.builtin.command:
+      cmd: "qemu-img resize /var/lib/libvirt/images/instance-1/instance-1.qcow2 5G"
+
+  - name: add metadata
+    ansible.builtin.template:
+      src: meta-data
+      dest: /var/lib/libvirt/images/base
+      owner: root
+      group: sudo
+      mode: '0777'
+
+  - name: add userdata
+    ansible.builtin.template:
+      src: user-data
+      dest: /var/lib/libvirt/images/base
+      owner: root
+      group: sudo
+      mode: '0777'
+
+  - name: create disks
+    ansible.builtin.command:
+      cmd: "genisoimage  -output /var/lib/libvirt/images/instance-1/instance-1-cidata.iso -volid cidata -joliet -rock /var/lib/libvirt/images/base/user-data /var/lib/libvirt/images/base/meta-data"
+      creates: /var/lib/libvirt/images/instance-1/instance-1-cidata.iso
+# alte fassung
+#  - name: create vm
+#    command: "qm create 100 --agent 1 --cores 1 --kvm 1 --memory 2048 --net0 virtio,bridge=vmbr0 --name testvm-template --ostype l26 --scsihw virtio-scsi-pci --ipconfig0 ip=192.168.56.210/24 --cipassword hallowelt --ciuser user"
+#  - name: import init disk
+#    command: "qm importdisk 100 focal-server-cloudimg-amd64.img local-lvm"
+#  - name: attache init disk
+#    command: "qm set 100 --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-100-disk-0"
+#  - name: add cloud-init CDROM drive
+#    command: "qm set 100 --ide2 local-lvm:cloudinit"
+#  - name: boot directly from cloud image
+#    command:  "qm set 100 --boot c --bootdisk scsi0"
+#  - name: start template
+#    command: "qm start 100"

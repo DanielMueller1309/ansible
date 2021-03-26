@@ -1,0 +1,13 @@
+#cloud-config
+users:
+  - name: user
+    lock_passwd: false
+    plain_text_passwd: hallowelt
+#   ssh-authorized-keys:
+#    -
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    groups: sudo, ssh
+    shell: /bin/bash
+runcmd:
+  - echo "AllowUsers ubuntu" >> /etc/ssh/sshd_config
+  - restart ssh
