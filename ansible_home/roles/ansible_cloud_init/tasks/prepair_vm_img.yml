@@ -17,20 +17,20 @@
 
   - name: create dir
     ansible.builtin.file:
-    path: /var/lib/libvirt/images/base
-    state: directory
-    mode: '0777
+      path: /var/lib/libvirt/images/base
+      state: directory
+      mode: '0777
     ansible.builtin.file:
-    path: /var/lib/libvirt/images/instance-1
-    state: directory
-    mode: '0777
+      path: /var/lib/libvirt/images/instance-1
+      state: directory
+      mode: '0777
 
   - name: move downloaded file
     ansible.builtin.copy:
     src: ~/focal-server-cloudimg-amd64.img
     dest:  /var/lib/libvirt/images/base/ubuntu-20.04.qcow2
     owner: root
-    group: sudo
+    group: root
     mode: '0777'
 
   - name:
@@ -46,7 +46,7 @@
       src: meta-data
       dest: /var/lib/libvirt/images/base
       owner: root
-      group: sudo
+      group: root
       mode: '0777'
 
   - name: add userdata
@@ -54,7 +54,7 @@
       src: user-data
       dest: /var/lib/libvirt/images/base
       owner: root
-      group: sudo
+      group: root
       mode: '0777'
 
   - name: create disks
