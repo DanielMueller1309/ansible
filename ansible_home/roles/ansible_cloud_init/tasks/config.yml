@@ -7,18 +7,3 @@
     group: root
     mode: u=rw,g=r,o=r
   become: true
-
-#- name: create snipped datei
-#  become: true
-#  ansible.builtin.file:
-#    path: /var/lib/vz/snippets/
-#    state: directory
-#
-#- name: add snipped datei
-#  become: true
-#  ansible.builtin.template:
-#    src: userconfig.yml
-#    dest: /var/lib/vz/snippets/
-#    owner: root
-#    group: root
-#    mode: '0777'

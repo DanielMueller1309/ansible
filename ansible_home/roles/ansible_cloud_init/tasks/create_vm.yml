@@ -14,6 +14,7 @@
       bootdisk: scsi0
       ciuser: user
       cipassword: hallowelt
+# weitere möglichkeiten (später hinzufügen)
 #    sshkeys: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJkVm98B71lD5XHfihwcYHE9TVpsJmK1vR1JcaU82L+'
 #    searchdomains: 'mydomain.internal'
 #    nameservers:
@@ -26,16 +27,8 @@
 
 
   - name: import init disk
-    command: "qm importdisk 100 focal-server-cloudimg-amd64.img local-lvm"
-
+    ansible.builtin.command: "qm importdisk 100 focal-server-cloudimg-amd64.img local-lvm"
+    #when: disk noch nicht eingehangen
   - name: attache init disk
-    command: "qm set 100 --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-100-disk-1"
-
-#  - name: Start VM
-#    community.general.proxmox_kvm:
-#      api_user: root@pam
-#      api_password: "{{ lookup('keepass', 'pveroot', 'password') }}"
-#      api_host: pve
-#      name: testvm-template
-#      node: pve
-#      state: started
+    ansible.builtin.command: "qm set 100 --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-100-disk-1"
+    #when: disk noch nicht eingehangen
