@@ -27,7 +27,7 @@
 
 
   - name: import init disk
-    ansible.builtin.command: "qm importdisk 100 focal-server-cloudimg-amd64.img local-lvm"
+    ansible.builtin.command: "qm importdisk 100 /var/lib/libvirt/images/instance-1/instance-1.qcow2 local-lvm"
     #when: disk noch nicht eingehangen
   - name: attache init disk
     ansible.builtin.command: "qm set 100 --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-100-disk-1"
