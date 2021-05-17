@@ -1,7 +1,0 @@
----
-- name: service | Enabling cloud-init.service
-  service:
-    name: cloud-init.service
-    enabled: true
-    state: restarted
-  become: true

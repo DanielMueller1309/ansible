@@ -1,15 +1,10 @@
 ---
-# tasks file for ansible-cloud-init
   - include_tasks: install.yml
-
-  - include_tasks: config.yml
-  #when: cloud_init_config|bool
 
   - include_tasks: clean.yml
 #when: cloud_init_clean|bool
 
-  - include_tasks: service.yml
-
-  - include_tasks: prepair_vm_img.yml
+  - include_tasks: config.yml
+  #when: cloud_init_config|bool
 
   - include_tasks: create_vm.yml
