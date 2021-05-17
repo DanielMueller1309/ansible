@@ -1,0 +1,13 @@
+.env/
+*.egg-info/
+*.pyc
+.idea
+.vscode
+dist
+build
+.venv
+.coverage
+README.txt
+test.py
+upload.sh
+*.code-workspace

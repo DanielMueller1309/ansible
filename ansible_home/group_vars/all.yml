@@ -19,3 +19,32 @@ keepass_psw: !vault |
           31363937626437623562623231313264363935663862386664626130393865393332393939306366
           3934613264323637300a373461333232326261623038653335326235383839323134386664383930
           3139
+
+
+#User:
+
+users:
+  - username: root
+    password: "{{ lookup('keepass', 'pveroot_hash', 'password') }}" # mkpasswd --method=SHA-512 --stdin
+    update_password: always
+    groups: ssh, sudo
+    ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCodE/I8vLzHxc8JNJnjTY4dbi/GG62wifbuWykZg94XGdUUOJTt81/SjWDqccjcdQDNs/LZn1KHuioUVyG4G/kgjS08xut99FzqOLT96jRuoh9wKYhIXbQcaqJK4w0P4FxZZ6ewlu4lsq8gLK5nzwYci0ylTqqX14XafI5mBdqCUXe9Sk6Hxhpim3aWzKSgwGdpwoDBIOg0G0RWrkDvZa1+EUg5W29DB6A1+DEJGSf7X9wEomGzI2Hry2BsbbthwTB//HA8vxHlCoXXF/ljXASdT/J/R1Qk6cBsfIEYmBtrmV9nHvmrWlQFGaq0QhvFKntEYmCHF9ul1HMtBgu9ylcb+woVPRQvuVXE3TdPCSvw5edALQAne40ly4o2GZLG3TPYBNGW2YW65OW7ljFkQGpgGZBSB9KL4TbHoUo3NQ8aY1rnmm5y2qZFQ109C9yXsiSt/mLqdAa+GhvQ8jEg88Xzl9O1sPaqq6PTBH/muHs65TtF2dPCgQi+v551Ncdvd0XWyiWl9wCyQ/t5qpSWoS32HW8Tnpf0kaKnAm7Xg9d8o3sqjKUHRbx1WFLSiINLXg3ansLaxGieUnWSayRbWn4UXQiM6Q70cmXdkYpal4g/pyVux04evB16ZbhGTnoGYczDaOruRgo6rnQbLNxa4aNWvIkfg/t3JE8YEd7SyZlCw== user@user-VirtualBox
+    exclusive_ssh_key: yes
+    use_sudo: yes
+    use_sudo_nopass: yes
+    user_state: present
+    servers:
+      - proxmox
+
+  - username: user
+    password: "{{ lookup('keepass', 'user_hash', 'password') }}" # mkpasswd --method=SHA-512 --stdin
+    update_password: always
+    groups: ssh, sudo
+    ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCodE/I8vLzHxc8JNJnjTY4dbi/GG62wifbuWykZg94XGdUUOJTt81/SjWDqccjcdQDNs/LZn1KHuioUVyG4G/kgjS08xut99FzqOLT96jRuoh9wKYhIXbQcaqJK4w0P4FxZZ6ewlu4lsq8gLK5nzwYci0ylTqqX14XafI5mBdqCUXe9Sk6Hxhpim3aWzKSgwGdpwoDBIOg0G0RWrkDvZa1+EUg5W29DB6A1+DEJGSf7X9wEomGzI2Hry2BsbbthwTB//HA8vxHlCoXXF/ljXASdT/J/R1Qk6cBsfIEYmBtrmV9nHvmrWlQFGaq0QhvFKntEYmCHF9ul1HMtBgu9ylcb+woVPRQvuVXE3TdPCSvw5edALQAne40ly4o2GZLG3TPYBNGW2YW65OW7ljFkQGpgGZBSB9KL4TbHoUo3NQ8aY1rnmm5y2qZFQ109C9yXsiSt/mLqdAa+GhvQ8jEg88Xzl9O1sPaqq6PTBH/muHs65TtF2dPCgQi+v551Ncdvd0XWyiWl9wCyQ/t5qpSWoS32HW8Tnpf0kaKnAm7Xg9d8o3sqjKUHRbx1WFLSiINLXg3ansLaxGieUnWSayRbWn4UXQiM6Q70cmXdkYpal4g/pyVux04evB16ZbhGTnoGYczDaOruRgo6rnQbLNxa4aNWvIkfg/t3JE8YEd7SyZlCw== user@user-VirtualBox
+    exclusive_ssh_key: yes
+    use_sudo: yes
+    use_sudo_nopass: yes
+    user_state: present
+    servers:
+      - proxmox
+      - ubuntu
