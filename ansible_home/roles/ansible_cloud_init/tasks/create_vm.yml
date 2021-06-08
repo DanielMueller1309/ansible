@@ -43,8 +43,11 @@
       regexp: '^scsi0:.*'
       line: 'scsi0: local-lvm:vm-100-disk-1'
 
+  - name: Start VM
     community.general.proxmox_kvm:
       api_user: root@pam
       api_password: "{{ lookup('keepass', 'pveroot', 'password') }}"
       api_host: pve
       name: testvm-template
+      node: pve
+      state: started
