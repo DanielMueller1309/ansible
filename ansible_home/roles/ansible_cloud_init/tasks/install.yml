@@ -4,3 +4,7 @@
     name: cloud-init
     state: present
   become: true
+
+- name: install | Install pip
+  include_role:
+    name: geerlingguy.ansible_role_pip
