@@ -1,0 +1,20 @@
+---
+  - name: vm zu template machen
+    community.general.proxmox_kvm:
+      node: pve
+      api_user: root@pam
+      api_password: "{{ lookup('keepass', 'pveroot', 'password') }}"
+      api_host: pve
+      vmid: 100
+      name: testvm-template
+      scsihw: virtio-scsi-pci
+      #scsi:
+      #  scsi0: "local-lvm:vm-100-disk-1,format=qcow2"
+      ide:
+        ide2: 'local:cloudinit,format=qcow2'
+      bootdisk: scsi0
+      ciuser: user
+      cipassword: hallowelt
+      proxmox_default_behavior: compatibility
+      template: yes
+      update: yes
