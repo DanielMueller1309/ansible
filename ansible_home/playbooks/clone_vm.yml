@@ -1,4 +1,0 @@
----
-  - hosts: proxmox
-    roles:
-      -  clone_template

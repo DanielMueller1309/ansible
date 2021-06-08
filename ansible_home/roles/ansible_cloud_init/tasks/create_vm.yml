@@ -4,68 +4,51 @@
       url: https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
       dest: /home/user/focal-server-cloudimg-amd64.img
 
-  - name: Create empty VM using Cloud-Init
+  - name: Create empty VM using proxmox_kvm and cloudinit user
     community.general.proxmox_kvm:
-      node: pve
-      api_user: root@pam
-      api_password: "{{ lookup('keepass', 'pveroot', 'password') }}"
-      api_host: pve
-      name: testvm-template
-      scsihw: virtio-scsi-pci
+      node: "{{ vm_node }}"
+      api_user: "{{ vm_api_user }}"
+      api_password: "{{ vm_api_password }}"
+      api_host: "{{ vm_api_host }}"
+      name: "{{ item.vm_name }}"
+      scsihw: "{{ vm_scsihw }}"
       scsi:
-       scsi0: 'local-lvm:1,format=raw'
+       scsi0: "{{ vm_scsi0 }}"
       ide:
-        ide2: 'local:cloudinit,format=qcow2'
-      bootdisk: scsi0
-      ciuser: user
-      cipassword: hallowelt
-# weitere möglichkeiten (später hinzufügen)
-#    sshkeys: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJkVm98B71lD5XHfihwcYHE9TVpsJmK1vR1JcaU82L+'
-#    searchdomains: 'mydomain.internal'
-#    nameservers:
-#      - '1.1.1.1'
-#      - '8.8.8.8'
+        ide2: "{{ vm_ide2 }}"
+      bootdisk: "{{ vm_bootdisk }}"
+      ciuser: "{{ vm_ciuser }}"
+      cipassword: "{{ vm_cipassword }}"
+      vmid: "{{ item.vm_vmid }}"
       net:
-        net0: 'virtio,bridge=vmbr0'
+        net0: "{{ vm_net0 }}"
       ipconfig:
-        ipconfig0: 'ip=192.168.56.230/24'
+        ipconfig0: "{{ item.vm_ipconfig0 }}"
+      nameservers: "{{ vm_nameservers }}"
       proxmox_default_behavior: compatibility
+      sshkeys: "{{ vm_sshkeys }}"
+    with_items: "{{ vms }}"
+    register: addvm
+    notify:
+      - Pause for 3 minutes to refresh vms with cloudinit setup
 
   - name: import init disk
     ansible.builtin.command:
-      cmd: "qm importdisk 100 /home/user/focal-server-cloudimg-amd64.img local-lvm"
-      creates: "/dev/mapper/pve-vm--100--disk--1"
-
+      cmd: "qm importdisk {{ item.vm_vmid }} /home/user/focal-server-cloudimg-amd64.img local-lvm"
+      creates: "/dev/mapper/pve-vm--{{ item.vm_vmid }}--disk--1"
+    with_items: "{{ vms }}"
 
   - name: attache base image disk
     ansible.builtin.lineinfile:
-      path: /etc/pve/local/qemu-server/100.conf
+      path: /etc/pve/local/qemu-server/{{ item.vm_vmid }}.conf
       regexp: '^scsi0:.*'
-      line: 'scsi0: local-lvm:vm-100-disk-1'
+      line: 'scsi0: local-lvm:vm-{{ item.vm_vmid }}-disk-1'
+    with_items: "{{ vms }}"
 
-  - name: vm zu template machen
-    community.general.proxmox_kvm:
-      node: pve
-      api_user: root@pam
-      api_password: "{{ lookup('keepass', 'pveroot', 'password') }}"
-      api_host: pve
-      vmid: 100
-      name: testvm-template
-      scsihw: virtio-scsi-pci
-      #scsi:
-      #  scsi0: "local-lvm:vm-100-disk-1,format=qcow2"
-      ide:
-        ide2: 'local:cloudinit,format=qcow2'
-      bootdisk: scsi0
-      ciuser: user
-      cipassword: hallowelt
-      proxmox_default_behavior: compatibility
-      template: yes
-      update: yes
-
-  #- name: import init disk
-  #  ansible.builtin.command: "qm importdisk 100 /var/lib/libvirt/images/instance-1/instance-1.qcow2 local-lvm"
-    #when: disk noch nicht eingehangen
-  #- name: attache init disk
-  #  ansible.builtin.command: "qm set 100 --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-100-disk-1"
-    #when: disk noch nicht eingehangen
+  - name: restart cloud-init.service
+    service:
+      name: cloud-init.service
+      enabled: true
+      state: restarted
+    become: true
+    when: addvm
