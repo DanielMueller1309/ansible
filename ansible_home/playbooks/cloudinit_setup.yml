@@ -1,5 +1,5 @@
 ---
   - hosts: proxmox
     roles:
-      - { role: ansible_cloud_init, tags "create_template", become: yes}
+      - { role: ansible_cloud_init, tags "create_vms", become: yes}
 #      -  cloud_init_setup
