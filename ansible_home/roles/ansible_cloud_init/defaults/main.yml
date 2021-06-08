@@ -1,15 +1,3 @@
 ---
 # defaults file for ansible-cloud-init
 
-# Defines if cloud-init should be cleaned
-cloud_init_clean: false
-
-# Defines if cloud-init is configured
-cloud_init_config: false
-
-
-cloud_init_packages:
-  #- qemu-kvm
-  #- qemu-utils
-  - genisoimage
-  - virtinst
