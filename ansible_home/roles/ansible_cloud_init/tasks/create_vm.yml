@@ -19,6 +19,7 @@
       bootdisk: scsi0
       ciuser: user
       cipassword: hallowelt
+      vmid: 105
 # weitere möglichkeiten (später hinzufügen)
 #    sshkeys: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJkVm98B71lD5XHfihwcYHE9TVpsJmK1vR1JcaU82L+'
 #    searchdomains: 'mydomain.internal'
@@ -28,20 +29,20 @@
       net:
         net0: 'virtio,bridge=vmbr0'
       ipconfig:
-        ipconfig0: 'ip=192.168.56.230/24'
+        ipconfig0: 'ip=192.168.178.15/24,gw=192.168.178.1'
+      nameservers: 192.168.178.10
       proxmox_default_behavior: compatibility
 
   - name: import init disk
     ansible.builtin.command:
-      cmd: "qm importdisk 100 /home/user/focal-server-cloudimg-amd64.img local-lvm"
-      creates: "/dev/mapper/pve-vm--100--disk--1"
+      cmd: "qm importdisk 105 /home/user/focal-server-cloudimg-amd64.img local-lvm"
+      creates: "/dev/mapper/pve-vm--105--disk--1"
 
 
   - name: attache base image disk
     ansible.builtin.lineinfile:
-      path: /etc/pve/local/qemu-server/100.conf
+      path: /etc/pve/local/qemu-server/105.conf
       regexp: '^scsi0:.*'
-      line: 'scsi0: local-lvm:vm-100-disk-1'
 
   - name: Start VM
     community.general.proxmox_kvm:
@@ -51,3 +52,4 @@
       name: testvm-template
       node: pve
       state: started
+      line: 'scsi0: local-lvm:vm-105-disk-1'
