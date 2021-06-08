@@ -7,4 +7,5 @@
       name: "{{ item.vm_name }}"
       node: pve
       state: started
+      proxmox_default_behavior: compatibility
     with_items: "{{ vms }}"
