@@ -43,13 +43,4 @@
     ansible.builtin.lineinfile:
       path: /etc/pve/local/qemu-server/105.conf
       regexp: '^scsi0:.*'
-
-  - name: Start VM
-    community.general.proxmox_kvm:
-      api_user: root@pam
-      api_password: "{{ lookup('keepass', 'pveroot', 'password') }}"
-      api_host: pve
-      name: testvm-template
-      node: pve
-      state: started
       line: 'scsi0: local-lvm:vm-105-disk-1'

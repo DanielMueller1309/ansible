@@ -1,0 +1,9 @@
+---
+  - name: Start VMs
+    community.general.proxmox_kvm:
+      api_user: root@pam
+      api_password: "{{ lookup('keepass', 'pveroot', 'password') }}"
+      api_host: pve
+      name: testvm-template
+      node: pve
+      state: started
