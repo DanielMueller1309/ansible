@@ -1,5 +1,5 @@
 ---
-- name: clean | Cleaning Up Ubuntu cloud-init
+- name: clean | Cleaning Up cloud-init
   file:
     path: "{{ item }}"
     state: absent
