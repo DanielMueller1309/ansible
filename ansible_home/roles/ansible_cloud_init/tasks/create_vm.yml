@@ -6,41 +6,43 @@
 
   - name: Create empty VM using proxmox_kvm and cloudinit user
     community.general.proxmox_kvm:
-      node: pve
-      api_user: root@pam
-      api_password: "{{ lookup('keepass', 'pveroot', 'password') }}"
-      api_host: pve
-      name: testvm-template
-      scsihw: virtio-scsi-pci
+      node: "{{ vm_node }}"
+      api_user: "{{ vm_api_user }}"
+      api_password: "{{ vm_api_password }}"
+      api_host: "{{ vm_api_host }}"
+      name: "{{ item.vm_name }}"
+      scsihw: "{{ vm_scsihw }}"
       scsi:
-       scsi0: 'local-lvm:1,format=raw'
+       scsi0: "{{ vm_scsi0 }}"
       ide:
-        ide2: 'local:cloudinit,format=qcow2'
-      bootdisk: scsi0
-      ciuser: user
-      cipassword: hallowelt
-      vmid: 105
+        ide2: "{{ vm_ide2 }}"
+      bootdisk: "{{ vm_bootdisk }}"
+      ciuser: "{{ vm_ciuser }}"
+      cipassword: "{{ vm_cipassword }}"
+      vmid: "{{ item.vm_vmid }}"
+      net:
+        net0: "{{ vm_net0 }}"
+      ipconfig:
+        ipconfig0: "{{ item.vm_ipconfig0 }}"
+      nameservers: "{{ vm_nameservers }}"
+      proxmox_default_behavior: compatibility
+    with_items: "{{ vms }}"
 # weitere möglichkeiten (später hinzufügen)
 #    sshkeys: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJkVm98B71lD5XHfihwcYHE9TVpsJmK1vR1JcaU82L+'
 #    searchdomains: 'mydomain.internal'
 #    nameservers:
 #      - '1.1.1.1'
 #      - '8.8.8.8'
-      net:
-        net0: 'virtio,bridge=vmbr0'
-      ipconfig:
-        ipconfig0: 'ip=192.168.178.15/24,gw=192.168.178.1'
-      nameservers: 192.168.178.10
-      proxmox_default_behavior: compatibility
 
   - name: import init disk
     ansible.builtin.command:
-      cmd: "qm importdisk 105 /home/user/focal-server-cloudimg-amd64.img local-lvm"
-      creates: "/dev/mapper/pve-vm--105--disk--1"
-
+      cmd: "qm importdisk {{ item.vm_vmid }} /home/user/focal-server-cloudimg-amd64.img local-lvm"
+      creates: "/dev/mapper/pve-vm--{{ item.vm_vmid }}--disk--1"
+    with_items: "{{ vms }}"
 
   - name: attache base image disk
     ansible.builtin.lineinfile:
-      path: /etc/pve/local/qemu-server/105.conf
+      path: /etc/pve/local/qemu-server/{{ item.vm_vmid }}.conf
       regexp: '^scsi0:.*'
-      line: 'scsi0: local-lvm:vm-105-disk-1'
+      line: 'scsi0: local-lvm:vm-{{ item.vm_vmid }}-disk-1'
+    with_items: "{{ vms }}"

@@ -4,6 +4,7 @@
       api_user: root@pam
       api_password: "{{ lookup('keepass', 'pveroot', 'password') }}"
       api_host: pve
-      name: testvm-template
+      name: "{{ item.vm_name }}"
       node: pve
       state: started
+    with_items: "{{ vms }}"

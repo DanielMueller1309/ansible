@@ -1,3 +1,24 @@
 ---
 # defaults file for ansible-cloud-init
+#static vars for vms:
+  vm_node: pve
+  vm_api_user: root@pam
+  vm_api_password: "{{ lookup('keepass', 'pveroot', 'password') }}"
+  vm_api_host: pve
+  vm_scsihw: virtio-scsi-pci
+  vm_scsi0: 'local-lvm:1,format=raw'
+  vm_ide2: 'local:cloudinit,format=qcow2'
+  vm_bootdisk: scsi0
+  vm_ciuser: user
+  vm_cipassword: hallowelt
+  vm_net0: 'virtio,bridge=vmbr0'
+  vm_proxmox_default_behavior: compatibility
+  vm_nameservers: 192.168.55.1
 
+  vms:
+    - vm_name: testvm1
+      vm_vmid: 101
+      vm_ipconfig0: 'ip=192.168.55.201/24,gw=192.168.55.1'
+    - vm_name: testvm2
+      vm_vmid: 102
+      vm_ipconfig0: 'ip=192.168.55.202/24,gw=192.168.55.1'
