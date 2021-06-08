@@ -1,11 +1,14 @@
 ---
-- name: config | Configuring /etc/cloud/cloud.cfg
-  template:
-    src: "cloud.cfg"
-    dest: "/etc/cloud/"
-    owner: root
-    group: root
-    mode: u=rw,g=r,o=r
+- name: restart cloud-init-local.service
+  service:
+    name: cloud-init-local.service
+    enabled: true
+    state: restarted
   become: true
-  notify:
-    - restart cloud-init.service
+
+- name: Gather all facts of cloud init for prove
+  community.general.cloud_init_data_facts:
+  register: result
+
+- ansible.builtin.debug:
+    var: result
