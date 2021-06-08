@@ -3,8 +3,9 @@
 
   - include_tasks: clean.yml
 #when: cloud_init_clean|bool
+  - include_tasks: create_vm.yml
 
   - include_tasks: config.yml
   #when: cloud_init_config|bool
 
-  - include_tasks: create_vm.yml
+  - include_tasks: startup_vms.yml
