@@ -49,3 +49,11 @@
       regexp: '^scsi0:.*'
       line: 'scsi0: local-lvm:vm-{{ item.vm_vmid }}-disk-1'
     with_items: "{{ vms }}"
+
+  - name: restart cloud-init.service
+    service:
+      name: cloud-init.service
+      enabled: true
+      state: restarted
+    become: true
+    when: addvm
