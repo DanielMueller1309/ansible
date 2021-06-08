@@ -4,7 +4,7 @@
       url: https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
       dest: /home/user/focal-server-cloudimg-amd64.img
 
-  - name: Create empty VM using Cloud-Init
+  - name: Create empty VM using proxmox_kvm and cloudinit user
     community.general.proxmox_kvm:
       node: pve
       api_user: root@pam
