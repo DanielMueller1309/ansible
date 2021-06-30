@@ -1,8 +1,8 @@
 ---
   - name: download cloud image
     get_url:
-      url: https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
-      dest: /home/user/focal-server-cloudimg-amd64.img
+      url: "{{ source_url }}"
+      dest: "{{ dest_path }}"
 
   - name: Create empty VM using proxmox_kvm and cloudinit user
     community.general.proxmox_kvm:
@@ -34,7 +34,7 @@
 
   - name: import init disk
     ansible.builtin.command:
-      cmd: "qm importdisk {{ item.vm_vmid }} /home/user/focal-server-cloudimg-amd64.img local-lvm"
+      cmd: "qm importdisk {{ item.vm_vmid }} {{ dest_path }} local-lvm"
       creates: "/dev/mapper/pve-vm--{{ item.vm_vmid }}--disk--1"
     with_items: "{{ vms }}"
 

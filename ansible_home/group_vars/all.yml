@@ -10,15 +10,15 @@ ansible_become_pass: "{{ lookup('keepass', 'testserver', 'password') }}"
 ansible_ssh_common_args: "'-o StrictHostKeyChecking=no'"
 
 
-#KeePass password
+#KeePass password (ansible-vault encrypt_string <password>)
 keepass_dbx: "./database_server.kdbx"
 keepass_psw: !vault |
           $ANSIBLE_VAULT;1.1;AES256
-          33313533663236646137326336323161363764663261643731343162326430383337306162313633
-          6335353362336539653937363733383766373061353932320a323736333561643237393033626366
-          64643963646534373566323563386338633839333933396366656663363061636438356639356437
-          3638383939623035370a306263313030643936373833363634626339303537306264316361626164
-          3334
+          39383436353737303362643136623537323333343536616263346364633862653761303566343834
+          3232633931323430376135373464393866346536396330610a663930646266643562613165363963
+          66623330386430343362646238313161306437353366626231303165656662393234336639313531
+          3937646131663738660a366631393566356431613665336535373833383033343362646161366265
+          6239
 
 
 #User:
@@ -48,3 +48,11 @@ users:
     servers:
       - proxmox
       - ubuntu
+# tmux
+users_tmux:
+  - username: user
+    tmux_allow: true
+    tmux_downloadpath: "https://raw.githubusercontent.com/DanielMueller1309/linux/master/Programme/tmux/.tmux.conf"
+    tmux_conf_destination: "/home/daniel/.tmux.conf"
+    tmux_bashrc_destination: "/home/daniel/.bashrc"
+    tmux_standardsession_name: "default"
