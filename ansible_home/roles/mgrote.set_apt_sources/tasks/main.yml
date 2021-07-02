@@ -8,21 +8,17 @@
       backup: yes
     register: copy_src
     when:
-      - "'ubuntu' in group_names"
-#      - acng_server is defined
-#      - acng_server_port is defined
+      - "'Ubuntu' in ansible_distribution"
 
-  - name: Proxmox debian.list kopieren
+  - name: Proxmox sources.list kopieren
     become: yes
     template:
       src: "proxmox_sources.list"
-      dest: "/etc/apt/sources.list.d/debian.list"
+      dest: "/etc/apt/sources.list"
       backup: yes
     register: copy_src
     when:
-      - "'proxmox' in group_names"
-#      - acng_server is defined
-#      - acng_server_port is defined
+      - "'pve' in ansible_kernel"
 
   - name: Proxmox pve-no-subscription.list kopieren
     become: yes
@@ -32,12 +28,10 @@
       backup: yes
     register: copy_src
     when:
-      - "'proxmox' in group_names"
-#      - acng_server is defined
-#      - acng_server_port is defined
+      - "'pve' in ansible_kernel"
 
   - name: apt_update # noqa 503 503
-    become: yes
+    become: true
     apt:
       update_cache: yes
-    when: copy_src.changed
+    #when: copy_src.changed
