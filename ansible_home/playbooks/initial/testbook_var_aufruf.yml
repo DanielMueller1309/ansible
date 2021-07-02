@@ -1,0 +1,9 @@
+---
+  - hosts: proxmox
+    pre_tasks:
+      - name: print testbook_var_aufruf host
+        ansible.builtin.debug:
+          msg: "Host:{{ testvar }}"
+
+    vars:
+      testvar: "aufruf"

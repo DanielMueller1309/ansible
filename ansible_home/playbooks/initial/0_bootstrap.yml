@@ -1,5 +1,5 @@
 ---
-  - hosts: proxmox
+  - hosts: "{{ hostname }}"
     gather_facts: false
     max_fail_percentage: 20%
     pre_tasks:
@@ -15,16 +15,8 @@
       - { role: ryandaniels.create_users, tags: "user", become: yes}
       - geerlingguy.ansible_role_pip
 
-    vars:
-      ### reobertdebock.bootstrap
-      bootstrap_user: root
-      bootstrap_wait_for_host: no
-      bootstrap_timeout: 1
-      ### ansible
-      ansible_user: "root"
-      ansible_password: "{{ lookup('keepass', 'pveroot', 'password') }}"
-      ansible_become_password: "{{ lookup('keepass', 'pveroot', 'password') }}"
-      ansible_ssh_common_args: "'-o StrictHostKeyChecking=no'"
+    #vars:
+
 
 #    tasks:
 #      - name: Change user password
