@@ -1,0 +1,5 @@
+---
+  - hosts: pihole
+  - import_playbook: ../initial/0_bootstrap.yml
+    vars:
+      hostname: pihole

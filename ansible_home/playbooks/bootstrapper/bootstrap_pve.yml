@@ -1,0 +1,6 @@
+---
+  - hosts: proxmox
+
+  - import_playbook: ../initial/0_bootstrap.yml
+    run_once: true
+    delegate_to: proxmox
