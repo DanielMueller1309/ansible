@@ -1,0 +1,4 @@
+---
+  - hosts: pihole
+    roles:
+      - { role: DanielMueller1309.pihole, tags: "pihole installer", become: yes}
