@@ -63,3 +63,27 @@ users_tmux:
     tmux_conf_destination: "/home/daniel/.tmux.conf"
     tmux_bashrc_destination: "/home/daniel/.bashrc"
     tmux_standardsession_name: "default"
+
+
+
+#apt_install_package vars
+programs_common:
+  - ntp
+  - htop
+  - git
+  - dnsutils
+  - nano
+  - mc
+  - tree
+  - curl
+  - net-tools
+  - ntpdate
+  - python3
+  - vim
+programs_only_physical:
+  - hddtemp
+  - ipmitool
+programs_only_vms:
+  - qemu-guest-agent
+  - open-vm-tools
+programs_extra:
