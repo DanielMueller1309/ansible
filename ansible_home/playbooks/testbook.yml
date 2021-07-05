@@ -1,0 +1,6 @@
+---
+  - hosts: proxmox
+    pre_tasks:
+      - name: Pause for 3 minutes to refresh vms with cloudinit setup
+        pause:
+          seconds: 10
