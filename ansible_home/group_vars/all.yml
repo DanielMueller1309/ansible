@@ -93,3 +93,7 @@ programs_only_vms:
   - qemu-guest-agent
   - open-vm-tools
 programs_extra:
+
+#pip install packages:
+pip_install_packages:
+  - bpytop
