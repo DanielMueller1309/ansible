@@ -10,11 +10,12 @@
           #192.168.33.101
       ubuntu:
         hosts:
+
           pihole:
             ansible_host: 192.168.178.15
           #vpn:
           #  ansible_host: 192.168.178.12
-      #testserver:
-      #  hosts:
-      #    192.168.178.70
+      testserver:
+        hosts:
+          192.168.178.16
       #    192.168.178.71
