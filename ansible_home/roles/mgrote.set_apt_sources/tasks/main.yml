@@ -34,4 +34,4 @@
     become: true
     apt:
       update_cache: yes
-    #when: copy_src.changed
+    when: copy_src.changed
