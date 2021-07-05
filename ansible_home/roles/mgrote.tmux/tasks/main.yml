@@ -9,6 +9,7 @@
   - name: config tmux
     block:
       - name: add bashrc if it doesnt exist already
+        become: true
         file:
           path: "{{ item.tmux_bashrc_destination }}"
           state: file
@@ -18,11 +19,7 @@
         get_url:
           url: "{{ item.tmux_downloadpath }}"
           dest: "{{ item.tmux_conf_destination }}"
-          use_proxy: yes
           mode: '0664'
-        environment:
-          HTTP_PROXY: "{{ proxy_ip }}:{{ proxy_port }}"
-          HTTPS_PROXY: "{{ proxy_ip }}:{{ proxy_port }}"
         with_items: "{{ users_tmux }}"
 
       - name: add tmux-session config to .bashrc

@@ -1,5 +1,9 @@
 ---
 - name: Ensure Pip is installed.
+  become: true
+  #vars:
+  #  - ansible_become_password: "{{ lookup('keepass', 'user', 'password') }}"
+    # - ansible_become_user: user
   package:
     name: "{{ pip_package }}"
     state: present

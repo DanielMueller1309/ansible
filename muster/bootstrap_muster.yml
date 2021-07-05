@@ -1,0 +1,5 @@
+---
+  - hosts: <host oder gruppe>
+  - import_playbook: ../initial/0_bootstrap.yml
+    vars:
+      hostname: <host oder gruppe> # ist wichtig, bei 0_bootstrap.yml steht diese var drin um mit den bootstrap_setups die vms zu unterscheiden
