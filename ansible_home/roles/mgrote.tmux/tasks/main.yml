@@ -9,6 +9,7 @@
   - name: config tmux
     block:
       - name: add bashrc if it doesnt exist already
+        become: true
         file:
           path: "{{ item.tmux_bashrc_destination }}"
           state: file
