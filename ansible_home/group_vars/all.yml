@@ -60,8 +60,15 @@ users_tmux:
   - username: user
     tmux_allow: true
     tmux_downloadpath: "https://raw.githubusercontent.com/DanielMueller1309/linux/master/Programme/tmux/.tmux.conf"
-    tmux_conf_destination: "/home/daniel/.tmux.conf"
-    tmux_bashrc_destination: "/home/daniel/.bashrc"
+    tmux_conf_destination: "/home/user/.tmux.conf"
+    tmux_bashrc_destination: "/home/user/.bashrc"
+    tmux_standardsession_name: "default"
+
+  - username: root
+    tmux_allow: true
+    tmux_downloadpath: "https://raw.githubusercontent.com/DanielMueller1309/linux/master/Programme/tmux/.tmux.conf"
+    tmux_conf_destination: "/home/.tmux.conf"
+    tmux_bashrc_destination: "/home/.bashrc"
     tmux_standardsession_name: "default"
 
 
