@@ -1,4 +1,4 @@
 ---
   - hosts: all
     roles:
-      - { role: mgrote.tmux, tags: "tmux installer", become: yes}
+      - { role: DanielMueller1309.tmux, tags: "tmux installer", become: yes}

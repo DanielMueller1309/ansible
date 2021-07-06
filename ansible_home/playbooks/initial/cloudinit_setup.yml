@@ -2,4 +2,4 @@
   - hosts: proxmox
     roles:
       - { role: geerlingguy.ansible_role_pip, tags: "pip installer", become: yes}
-      - { role: ansible_cloud_init, tags "create_vms", become: yes}
+      - { role: DanielMueller1309.proxmox_kvm_create_vms, tags "create_vms", become: yes}
