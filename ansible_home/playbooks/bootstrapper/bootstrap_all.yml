@@ -1,0 +1,5 @@
+---
+  - hosts: all
+  - import_playbook: ../initial/0_bootstrap.yml
+    vars:
+      hostname: all

@@ -3,18 +3,16 @@
     children:
       proxmox:
         hosts:
-          #192.168.56.114:
-          #192.168.55.4:
           192.168.178.10:
-          #192.168.56.117:
-          #192.168.33.101
       ubuntu:
         hosts:
           pihole:
             ansible_host: 192.168.178.15
-          #vpn:
-          #  ansible_host: 192.168.178.12
-      #testserver:
-      #  hosts:
-      #    192.168.178.70
+          pivpn:
+            ansible_host: 192.168.178.12
+            #nextcloud:
+            #  ansible_host: 192.168.178.xx
+      homeserver_test:
+        hosts:
+          192.168.178.16
       #    192.168.178.71

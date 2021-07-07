@@ -12,7 +12,7 @@
         become: true
         file:
           path: "{{ item.tmux_bashrc_destination }}"
-          state: file
+          state: touch
         with_items: "{{ users_tmux }}"
 
       - name: download tmux.conf for "{{ item.username }}"

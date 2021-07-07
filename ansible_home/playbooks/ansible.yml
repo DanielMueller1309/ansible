@@ -1,4 +1,0 @@
----
-  - hosts: ansible
-    roles:
-      - { role: geerlingguy.ansible, tags: "ansible installer", become: yes}

@@ -24,4 +24,4 @@
     ansible.builtin.package:
       name: "{{ programs_only_physical }}"
       state: present
-    when: ansible_virtualization_role != 'host'
+    when: ansible_virtualization_role == 'host'

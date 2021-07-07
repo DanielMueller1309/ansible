@@ -10,7 +10,7 @@
           state: absent
         when: "'proxmox' in group_names"
     roles:
-      - { role: mgrote.set_apt_sources, tags "setapt", become: yes}
+      - { role: mgrote.apt_manage_sources, tags "setapt", become: yes}
       - { role: robertdebock.bootstrap, tags: "bootstrap", become: yes}
       - { role: ryandaniels.create_users, tags: "user", become: yes}
       - geerlingguy.ansible_role_pip

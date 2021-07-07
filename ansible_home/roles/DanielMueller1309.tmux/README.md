@@ -1,4 +1,4 @@
-## mgrote.tmux
+## DanielMueller1309.tmux
 ### Beschreibung
 Installiert tmux und erstellt .tmux.conf.
 Setzt tmux als "Standard-Shell".
