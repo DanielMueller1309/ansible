@@ -1,6 +1,9 @@
 ---
   all:
     children:
+      ansible:
+        hosts:
+          192.168.56.118
       proxmox:
         hosts:
           #192.168.56.114:
