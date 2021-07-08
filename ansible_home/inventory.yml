@@ -10,8 +10,12 @@
       ubuntu:
         hosts:
           pihole:
-            ansible_host: 192.168.178.15
+            ansible_host: 192.168.178.11
           pivpn:
+            ansible_host: 192.168.178.12
+          t_pihole:
+            ansible_host: 192.168.178.15
+          t_pivpn:
             ansible_host: 192.168.178.12
             #nextcloud:
             #  ansible_host: 192.168.178.xx
