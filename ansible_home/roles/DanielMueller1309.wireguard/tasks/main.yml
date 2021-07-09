@@ -1,0 +1,19 @@
+---
+  - name: download wireguard setup
+    get_url:
+    url: https://install.pivpn.io
+    dest: /tmp/install.sh
+    mode: '0440'
+
+  - name: create unattended wireguard options.conf
+    template:
+      dest: /tmp/wireguard_options.conf
+      src: unattended_wireguard.conf
+      owner: user
+      group: user
+      mode: '0777'
+
+  - name: install wireguard
+    ansible.builtin.command:
+      cmd: /tmp/install.sh --unattended /tmp/wireguard_options.conf
+      create: /etc/wireguard

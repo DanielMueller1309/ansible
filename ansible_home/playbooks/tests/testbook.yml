@@ -1,6 +1,4 @@
 ---
-  - hosts: proxmox
+  - hosts: pivpn
     pre_tasks:
-      - name: Pause for 3 minutes to refresh vms with cloudinit setup
-        pause:
-          seconds: 10
+      

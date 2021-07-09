@@ -1,0 +1,31 @@
+---
+  - name: Find config keys and save to var
+    find:
+      paths: /etc/wireguard/keys
+      patterns: '.*'
+      use_regex: yes
+    register: priv_keyfiles
+
+  - name: Find out conntent of key files
+    ansible.builtin.slurp:
+      src: "{{ priv_keyfiles.files[item].path }}"
+    register: stuff
+    loop: "{{ range(0, priv_keyfiles.examined , 1)|list }}"
+
+  - name: Print returned information off keyfiles
+    ansible.builtin.debug:
+      msg: "{{ stuff }}"
+
+  - name: Print specific item
+    ansible.builtin.debug:
+      msg: "{{ stuff.results[0] }}"
+
+  - name: Print specific item information of stuff aka the priv_keyfiles
+    ansible.builtin.debug:
+      msg:
+        - "Source: {{ stuff.results[0].source }}"
+        - "Content {{ stuff.results[0].content }}"
+  -
+  #- name: Print priv_keyfiles
+  #  ansible.builtin.debug:
+  #    msg: "{{ priv_keyfiles.files | map(attribute='path') | list }}"
