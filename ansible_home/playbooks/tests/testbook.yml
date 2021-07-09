@@ -1,6 +1,30 @@
 ---
-  - hosts: proxmox
+  - hosts: pivpn
     pre_tasks:
-      - name: Pause for 3 minutes to refresh vms with cloudinit setup
-        pause:
-          seconds: 10
+      #- name: Prints pw
+      #  ansible.builtin.debug:
+      #    msg: "{{ lookup('keepass', 'testgroup/testuser', 'password') }}"
+      - name: Find config keys
+        find:
+          paths: /etc/wireguard/keys
+          patterns: '.*'
+          use_regex: yes
+        register: priv_keyfiles
+      - name: "print the path of our first result"
+        debug:
+          var: priv_keyfiles.examined #.files #[0].path
+
+
+
+      #- name: Print priv_keyfiles
+      #  ansible.builtin.debug:
+      #    msg: "{{ priv_keyfiles.files | map(attribute='path') | list }}"
+
+
+      #- name: Find out
+      #  ansible.builtin.slurp:
+      #    src: /etc/wireguard
+      #  register: stuff
+      #- name: Print returned information
+      #  ansible.builtin.debug:
+      #    msg: "{{ stuff }}"
