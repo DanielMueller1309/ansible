@@ -1,0 +1,4 @@
+---
+  - hosts: pivpn
+    roles:
+      - { role: DanielMueller1309.wireguard_get_keys, tags: "get_wireguard_keys", become: yes}
