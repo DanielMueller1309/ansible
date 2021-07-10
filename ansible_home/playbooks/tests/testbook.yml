@@ -8,8 +8,7 @@
       - name: Create a new password, or get the existing item
         keepass:
           database: /tmp/test_db_keyfile.kdbx
-          hostname: testuser
+          title: testuser
           keyfile: /tmp/test_db_keyfile.key
-          purpose: MariaDB
-          username: mariadb-admin
-          password: ichhassemenschen
+          username: testuserdummy
+          entry_password: ichbineinpw
