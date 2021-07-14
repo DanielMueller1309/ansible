@@ -5,10 +5,26 @@
       # folgenden befehl >> ansible-doc keepass
       # eingeben um zu sehen wo die plugins gebraucht werden,
       # in diesem fall ist das gesuchte module in ../.plugins/modules/keepass.py
-      - name: Create a new password, or get the existing item
+      - name: Add entry or change existung one
         keepass:
           database: /tmp/test_db_keyfile.kdbx
-          title: testuser
           keyfile: /tmp/test_db_keyfile.key
-          username: testuserdummy
-          entry_password: ichbineinpw
+          title: admin_kennung
+          username: admin-user
+          entry_password: hallowelt
+          #notes: 'That´s themse to be the the incredibly place, the space for notes'
+          #url: 'https://pornhub.com'
+    
+      - name: Store kdbx to host
+        ansible.builtin.fetch:
+          src: /tmp/test_db_keyfile.kdbx
+          dest: /win/Users/danie/Git/ansible/ansible_home/
+          validate_checksum: yes
+          flat: yes
+
+      - name: Store kdbx.key to host
+        ansible.builtin.fetch:
+          src: /tmp/test_db_keyfile.key
+          dest: /win/Users/danie/Git/ansible/ansible_home/
+          validate_checksum: yes
+          flat: yes
